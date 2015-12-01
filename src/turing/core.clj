@@ -18,9 +18,16 @@
       machine
       (recur (run-iteration machine))))
 
+(defn readable-tape
+  [[ltape rtape]]
+  (let [mid-tape [(first rtape)]
+        right-tape (rest rtape)
+        left-tape (reverse ltape)]
+    (vec (concat left-tape [mid-tape] right-tape))))
+
 (defn -main
   "Read the input file and parse it as a turing machine."
   [x]
   (let [contents (slurp x)
         parsed (read-string contents)]
-    (println "Machine:" (run-machine parsed))))
+    (println "Resulting tape:" (readable-tape (run-machine parsed)))))
